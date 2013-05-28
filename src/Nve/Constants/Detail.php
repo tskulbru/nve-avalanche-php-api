@@ -1,6 +1,6 @@
 <?php
 /**
- * This class defines the language constants used by the api.
+ * This class defines the detail constants used by the api.
  *
  * @category  API
  * @package   Nve
@@ -10,15 +10,10 @@
  * @version   0.1
  * @link      http://www.stubit.no
  */
-namespace Nve;
+namespace Nve\Constants;
 
-abstract class Language
+abstract class Detail
 {
-    const NORWEGIAN = 1;
-    const ENGLISH   = 2;
-
-    public static $enums = array(
-        self::NORWEGIAN => "Norwegian",
-        self::ENGLISH => "English"
-    );
+    const SIMPLE = "Simple";
+    const DETAIL = "Detail";
 }

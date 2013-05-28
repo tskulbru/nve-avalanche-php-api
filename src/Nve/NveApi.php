@@ -13,11 +13,11 @@
  */
 namespace Nve;
 
-use Nve\AvalancheWarningSimple;
-use Nve\AvalancheWarningDetail;
-use Nve\Url;
-use Nve\Language;
-use Nve\Detail;
+use Nve\Models\AvalancheWarningSimple;
+use Nve\Models\AvalancheWarningDetail;
+use Nve\Constants\Url;
+use Nve\Constants\Language;
+use Nve\Constants\Detail;
 
 class NveApi
 {
@@ -85,7 +85,7 @@ class NveApi
      *
      * @return Nve\AvalancheWarning[] An array of avalanche warnings
      */
-    public function getByCordinates($latitude, $longitude, $detailLvl, $startDate, $endDate)
+    public function getByCordinates($latitude, $longitude, $detailLvl, $startDate = '', $endDate = '')
     {
         $url  = Url::BASEURL;
         $url .= sprintf(URL::COORD_URL, $detailLvl, $latitude, $longitude, $this->_language);
@@ -99,6 +99,26 @@ class NveApi
         }
 
         return $this->_callApi($url);
+    }
+
+    /**
+     * Gets the value of _language.
+     *
+     * @return int
+     */
+    public function getLanguage()
+    {
+        return $this->_language;
+    }
+
+    /**
+     * Gets the string value of _language.
+     *
+     * @return string
+     */
+    public function getLanguageString()
+    {
+        return Language::$enums[$this->_language];
     }
 
     /**
@@ -121,25 +141,5 @@ class NveApi
         $data = json_decode($result, true);
 
         return $data;
-    }
-
-    /**
-     * Gets the value of _language.
-     *
-     * @return int
-     */
-    public function getLanguage()
-    {
-        return $this->_language;
-    }
-
-    /**
-     * Gets the string value of _language.
-     *
-     * @return string
-     */
-    public function getLanguageString()
-    {
-        return Language::$enums[$this->_language-1];
     }
 }

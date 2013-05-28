@@ -11,7 +11,7 @@
  * @version   0.1
  * @link      http://www.stubit.no
  */
-namespace Nve;
+namespace Nve\Models;
 
 class AvalancheWarningDetail extends AvalancheWarningSimple
 {

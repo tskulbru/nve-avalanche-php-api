@@ -10,7 +10,7 @@
  * @version   0.1
  * @link      http://www.stubit.no
  */
-namespace Nve;
+namespace Nve\Constants;
 
 abstract class Region
 {
