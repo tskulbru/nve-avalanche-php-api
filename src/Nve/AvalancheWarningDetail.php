@@ -13,7 +13,7 @@
  */
 namespace Nve;
 
-class AvalancheWarningDetail extends Nve\AvalancheWarningSimple
+class AvalancheWarningDetail extends AvalancheWarningSimple
 {
     private $_dangerLevelName;
     private $_utmZone;
