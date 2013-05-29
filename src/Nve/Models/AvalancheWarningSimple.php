@@ -13,7 +13,7 @@
  */
 namespace Nve\Models;
 
-class AvalancheWarningSimple
+class AvalancheWarningSimple extends AvalancheWarning
 {
     private $_dangerLevel;
     private $_mainText;

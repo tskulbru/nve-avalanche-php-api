@@ -19,6 +19,6 @@ abstract class Url
     const COORD_URL          = "AvalancheWarningByCoordinates/%s/%s/%s/%s"; // {details}/{latitude}/{longitude}/{language}
     const START_END_DATE_URL = "/%s/%s"; // {startdate}/{enddate}
     const START_DATE_URL     = "/%s";
-    const SUMMARY_URL        = "%s/%s"; // {method}/{details}
-    const SUMMARY            = "RegionSummary";
+    const SUMMARY_URL        = "RegionSummary/%s"; // {details}
+
 }

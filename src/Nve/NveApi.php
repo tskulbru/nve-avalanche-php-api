@@ -45,7 +45,7 @@ class NveApi
      * @param string $startDate The start date we want results from. Defaults to today
      * @param string $endDate   The end date we want results form. Defaults to today
      *
-     * @return Nve\AvalancheWarning[] An array of avalanche warnings
+     * @return Nve\Models\AvalancheWarning[] An array of avalanche warnings
      */
     public function getByRegion($region, $detailLvl, $startDate = '', $endDate = '')
     {
@@ -60,18 +60,7 @@ class NveApi
             }
         }
 
-        $json = $this->_callApi($url);
-        $warningArray = array();
-        if($json === null)
-            return $warningArray;
-        foreach ($json as $item) {
-            if ($detailLvl === Detail::SIMPLE)
-                array_push($warningArray, AvalancheWarningSimple::fromJson($item));
-            else
-                array_push($warningArray, AvalancheWarningDetail::fromJson($item));
-        }
-
-        return $warningArray;
+        return $this->_serializeToArray($this->_callApi($url), $detailLvl);
     }
 
     /**
@@ -83,7 +72,7 @@ class NveApi
      * @param string $startDate The start date we want results from
      * @param string $endDate   The end date we want results form
      *
-     * @return Nve\AvalancheWarning[] An array of avalanche warnings
+     * @return Nve\Models\AvalancheWarning[] An array of avalanche warnings
      */
     public function getByCordinates($latitude, $longitude, $detailLvl, $startDate = '', $endDate = '')
     {
@@ -98,7 +87,22 @@ class NveApi
             }
         }
 
-        return $this->_callApi($url);
+        return $this->_serializeToArray($this->_callApi($url), $detailLvl);
+    }
+
+    /**
+     * List a summary of AvalancheWarnings for every region with the next 3 warning forecasts.
+     *
+     * @param string $detailLvl The level of detail we want
+     *
+     * @return Nve\Models\AvalancheWarning[] An array of avalanche warnings
+     */
+    public function getRegionSummary($detailLvl)
+    {
+        $url = Url::BASEURL;
+        $url .= sprintf(URL::SUMMARY_URL, $detailLvl);
+
+        return $this->_serializeToArray($this->_callApi($url), $detailLvl);
     }
 
     /**
@@ -141,5 +145,28 @@ class NveApi
         $data = json_decode($result, true);
 
         return $data;
+    }
+
+    /**
+     * Serializes the data in the JSON array into an array of AvalancheWarning objects
+     *
+     * @param mixed  $json      JSON array
+     * @param string $detailLvl The level of detail we want
+     *
+     * @return array
+     */
+    private function _serializeToArray($json, $detailLvl)
+    {
+        $warningArray = array();
+        if(!isset($json))
+            return $warningArray;
+        foreach ($json as $item) {
+            if ($detailLvl === Detail::SIMPLE)
+                array_push($warningArray, AvalancheWarningSimple::fromJson($item));
+            else
+                array_push($warningArray, AvalancheWarningDetail::fromJson($item));
+        }
+
+        return $warningArray;
     }
 }

@@ -129,7 +129,7 @@ class AvalancheWarningDetail extends AvalancheWarningSimple
      *
      * @param mixed $json JSON array or object
      *
-     * @return AvalancheWarningDetail
+     * @return AvalancheWarningSimple
      */
     public static function fromJson($json)
     {
