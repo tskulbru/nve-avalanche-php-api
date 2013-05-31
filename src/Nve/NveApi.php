@@ -102,7 +102,20 @@ class NveApi
         $url = Url::BASEURL;
         $url .= sprintf(URL::SUMMARY_URL, $detailLvl);
 
-        return $this->_serializeToArray($this->_callApi($url), $detailLvl);
+        $json = $this->_callApi($url);
+        $regionArray = array();
+        if(!isset($json))
+            return $regionArray;
+        foreach ($json as $region) {
+            $tempArray = array();
+            if(is_object($region))
+                $tempArray = $this->_serializeToArray($region->AvalancheWarningList, $detailLvl);
+            else if(is_array($region))
+                $tempArray = $this->_serializeToArray($region['AvalancheWarningList'], $detailLvl);
+
+            $regionArray = array_merge($regionArray, $tempArray);
+        }
+        return $regionArray;
     }
 
     /**
@@ -166,7 +179,6 @@ class NveApi
             else
                 array_push($warningArray, AvalancheWarningDetail::fromJson($item));
         }
-
         return $warningArray;
     }
 }
