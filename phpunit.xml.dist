@@ -13,7 +13,8 @@
 >
     <testsuites>
         <testsuite name="Nve Test Suite">
-            <directory>./tests/Nve/</directory>
+            <directory suffix="Test.php">./tests/Nve/Test</directory>
+            <directory suffix="Test.php">./tests/Nve/Test/Models</directory>
         </testsuite>
     </testsuites>
 
@@ -25,7 +26,10 @@
 
     <filter>
         <whitelist>
-            <directory>./src/Nve/</directory>
+            <directory>./src</directory>
+            <exclude>
+                <directory>./tests</directory>
+           </exclude>
         </whitelist>
     </filter>
 </phpunit>
